@@ -25,6 +25,8 @@ public class MiFragmento extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private String textoRecibido;
+
     public MiFragmento() {
         // Required empty public constructor
     }
@@ -53,6 +55,8 @@ public class MiFragmento extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+            textoRecibido = requireArguments().getString("textoRecibido");
         }
     }
 
@@ -61,12 +65,7 @@ public class MiFragmento extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mi_fragmento, container, false);
         TextView textViewFragment = view.findViewById(R.id.textView3);
-
-        if (getArguments() != null) {
-            String textoRecibido = requireArguments().getString("textoRecibido");
-            textViewFragment.setText(textoRecibido);
-        }
-
+        if (getArguments() != null) textViewFragment.setText(textoRecibido);
         return view;
     }
 }
