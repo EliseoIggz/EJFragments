@@ -1,6 +1,8 @@
 package com.example.ejfragments;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +25,31 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        FragmentManager FM = getSupportFragmentManager();
-        FragmentTransaction FT = FM.beginTransaction();
+        EditText editText = findViewById(R.id.editText);
+        Button sendBtn = findViewById(R.id.sendBtn);
 
-        FT.add(R.id.fragmentContainerView, MiFragmento.class, null);
+        //Agregar el fragmento, usando el if para que solo sea haga al crear la actividad
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragmentContainerView, MiFragmento.class, null)
+                    .commit();
+        }
+
+        sendBtn.setOnClickListener(v -> {
+            String texto = editText.getText().toString();
+
+            //Crear un Bundle con los datos
+            Bundle bundle = new Bundle();
+            bundle.putString("textoRecibido", texto);
+
+            //Reemplazar el fragmento con los nuevos datos enviados
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.fragmentContainerView, MiFragmento.class, bundle)
+                    .commit();
+        });
     }
 }
